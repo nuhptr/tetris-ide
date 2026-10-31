@@ -1,6 +1,6 @@
 # Current functionality
 
-This repository is the starting scaffold for Tetris IDE. It currently includes the Next.js App Router, React, TypeScript, Tailwind CSS, and Geist font setup. The product-specific Tetris and IDE features have not been implemented yet.
+This repository is the starting scaffold for Tetris IDE. It currently includes the Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/ui components, Inter/IBM Plex Mono fonts, and Clerk authentication provider/middleware setup. The product-specific Tetris and IDE features have not been implemented yet.
 
 ## Setup progress
 
@@ -9,7 +9,10 @@ This repository is the starting scaffold for Tetris IDE. It currently includes t
 - [x] Add the theme provider and wrap the app in it from `src/app/layout.tsx`.
 - [x] Update `src/app/globals.css` with customized shadcn theme variables, light/dark colors, radius tokens, and animation styles.
 - [x] Configure the Tailwind dark variant and base styles in `src/app/globals.css`.
-- [ ] Add a UI control for switching between light and dark themes.
+- [x] Add custom CSS for button cursors, the cell-ripple animation, and scrollbars in `src/app/additional.css`.
+- [x] Install `@clerk/nextjs` and wrap the app with `ClerkProvider` in `src/app/layout.tsx`.
+- [x] Add Clerk middleware using `clerkMiddleware` in `src/proxy.ts`.
+- [ ] Add sign-in/sign-up UI and user account controls.
 
 To repeat the component-generation step:
 
@@ -34,10 +37,10 @@ bunx shadcn@latest add --all
    import { ThemeProvider as NextThemesProvider } from "next-themes"
 
    export function ThemeProvider({
-     children,
-     ...props
+      children,
+      ...props
    }: React.ComponentProps<typeof NextThemesProvider>) {
-     return <NextThemesProvider {...props}>{children}</NextThemesProvider>
+      return <NextThemesProvider {...props}>{children}</NextThemesProvider>
    }
    ```
 
@@ -47,9 +50,21 @@ bunx shadcn@latest add --all
    import { ThemeProvider } from "@/components/theme-provider"
 
    // Inside the root layout:
-   <body>
-     <ThemeProvider>{children}</ThemeProvider>
+   ;<body>
+      <ThemeProvider>{children}</ThemeProvider>
    </body>
    ```
 
 4. Configure the light/dark theme variables and Tailwind dark variant in `src/app/globals.css`.
+
+### Set up Clerk authentication
+
+1. Install Clerk for Next.js:
+
+   ```bash
+   bun add @clerk/nextjs
+   ```
+
+2. Wrap the root layout with `ClerkProvider` from `@clerk/nextjs`.
+3. Add `src/proxy.ts` with `clerkMiddleware()` and configure its matcher for app pages and API routes.
+4. Add Clerk environment keys and implement sign-in/sign-up and account UI before using authentication in the app.
