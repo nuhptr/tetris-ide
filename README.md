@@ -1,6 +1,6 @@
 # Current functionality
 
-This repository is the starting scaffold for Tetris IDE. It currently includes the Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/ui components, Inter/IBM Plex Mono fonts, and Clerk authentication provider/middleware setup. The product-specific Tetris and IDE features have not been implemented yet.
+This repository is the starting scaffold for Tetris IDE. It currently includes the Next.js App Router, React, TypeScript, Tailwind CSS, shadcn/ui components, Inter/IBM Plex Mono fonts, and Clerk sign-in/sign-up and user account controls. The product-specific Tetris and IDE features have not been implemented yet.
 
 ## Setup progress
 
@@ -11,8 +11,12 @@ This repository is the starting scaffold for Tetris IDE. It currently includes t
 - [x] Configure the Tailwind dark variant and base styles in `src/app/globals.css`.
 - [x] Add custom CSS for button cursors, the cell-ripple animation, and scrollbars in `src/app/additional.css`.
 - [x] Install `@clerk/nextjs` and wrap the app with `ClerkProvider` in `src/app/layout.tsx`.
+- [x] Install `@clerk/themes` and apply Clerk's dark appearance in `src/app/layout.tsx`.
 - [x] Add Clerk middleware using `clerkMiddleware` in `src/proxy.ts`.
-- [ ] Add sign-in/sign-up UI and user account controls.
+- [x] Add signed-out sign-in/sign-up controls and a signed-in `UserButton` in the root layout.
+- [x] Wrap Clerk auth controls in `Suspense` to isolate their runtime rendering.
+- [ ] Configure Clerk environment keys for the application.
+- [ ] Add a UI control for switching between light and dark themes.
 
 To repeat the component-generation step:
 
@@ -59,12 +63,13 @@ bunx shadcn@latest add --all
 
 ### Set up Clerk authentication
 
-1. Install Clerk for Next.js:
+1. Install Clerk for Next.js and its dark theme:
 
    ```bash
-   bun add @clerk/nextjs
+   bun add @clerk/nextjs @clerk/themes
    ```
 
-2. Wrap the root layout with `ClerkProvider` from `@clerk/nextjs`.
+2. Wrap the root layout with `ClerkProvider` from `@clerk/nextjs` and set its appearance using the dark theme from `@clerk/themes`.
 3. Add `src/proxy.ts` with `clerkMiddleware()` and configure its matcher for app pages and API routes.
-4. Add Clerk environment keys and implement sign-in/sign-up and account UI before using authentication in the app.
+4. Add signed-out sign-in/sign-up controls and a signed-in `UserButton` to the layout. Wrap Clerk controls in `Suspense`.
+5. Configure the Clerk environment keys before running authentication locally or deploying.
