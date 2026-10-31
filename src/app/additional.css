@@ -1,0 +1,37 @@
+/* ADD CUSTOM CODE */
+@layer base {
+   button:not([disabled]),
+   [role="button"]:not([disabled]) {
+      cursor: pointer;
+   }
+}
+
+@theme inline {
+   /* Set these custom properties on the element using animate-cell-ripple; duration defaults to 200ms, and delay to 0ms */
+   --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none 1 var(--delay, 0ms);
+
+   @keyframes cell-ripple {
+      0% {
+         opacity: 0.4;
+      }
+      50% {
+         opacity: 0.8;
+      }
+      100% {
+         opacity: 0.4;
+      }
+   }
+}
+
+/* Custom code for scrollbar */
+::-webkit-scrollbar {
+   @apply w-2.5 h-2.5;
+}
+
+::-webkit-scrollbar-track {
+   @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+   @apply rounded-full bg-border border border-transparent border-solid bg-clip-padding;
+}
